@@ -157,22 +157,30 @@ export class Renderer {
 		const x1 = loopStart / duration * width;
 		const x2 = loopEnd / duration * width;
 
+		// region fill
 		this.ctx.fillStyle = "rgba(0, 255, 200, 0.15)";
 		this.ctx.fillRect(x1, 0, x2 - x1, height);
+
+		// start handle
+		this.ctx.strokeStyle = "#ff3b3b";
+		this.ctx.lineWidth = 2;
+		this.ctx.beginPath();
+		this.ctx.moveTo(x1, 0);
+		this.ctx.lineTo(x1, height);
+		this.ctx.stroke();
+
+		// end handle
+		this.ctx.beginPath();
+		this.ctx.moveTo(x2, 0);
+		this.ctx.lineTo(x2, height);
+		this.ctx.stroke();
+
+		this.ctx.lineWidth = 1;
 	}
 
 	drawEmptyState() {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 		this.ctx.fillStyle = "#666";
 		this.ctx.fillText("Load audio...", 20, 20);
-	}
-
-	getLoopHandles(loopStart, loopEnd, duration) {
-
-		if (!duration) return;
-		const x1 = (loopStart / duration) * this.width;
-		const x2 = (loopEnd / duration) * this.width;
-
-		return { x1, x2 };
 	}
 }

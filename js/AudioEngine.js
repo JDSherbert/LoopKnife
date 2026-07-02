@@ -1,4 +1,6 @@
 
+
+
 export class AudioEngine {
 	constructor() {
 		this.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -10,17 +12,27 @@ export class AudioEngine {
 
 		this.playbackStartTime = 0;
 		this.playbackOffset = 0;
+
+		this.loopRegion = null;
+		this.looping = false;
+		this.originalFile = null;
+		this.originalBytes = null;
 	}
 
 	async load(file) {
-		const arrayBuffer = await file.arrayBuffer();
 
+		this.originalFile = file;
+		this.originalBytes = await file.arrayBuffer();
+
+		// Get a seperate copy of the buffer as some browsers will consume the 
+		// original buffer when playing it, which will break the export functionality.
+		const arrayBuffer = await file.arrayBuffer();
 		const buffer = await this.ctx.decodeAudioData(arrayBuffer);
 
 		this.buffer = buffer;
 	}
 
-	async play(offset = this.playbackOffset) {
+	async play(offset = this.playbackOffset, loopRegion = null) {
 
 		if (!this.buffer) return;
 
@@ -31,7 +43,18 @@ export class AudioEngine {
 		this.source = this.ctx.createBufferSource();
 		this.source.buffer = this.buffer;
 
-		this.source.loop = false;
+		const hasValidLoop = loopRegion && loopRegion.getEnd() > loopRegion.getStart();
+
+		if (hasValidLoop) {
+			this.source.loop = true;
+			this.source.loopStart = loopRegion.getStart();
+			this.source.loopEnd = loopRegion.getEnd();
+		} else {
+			this.source.loop = false;
+		}
+
+		this.loopRegion = hasValidLoop ? loopRegion : null;
+		this.looping = hasValidLoop;
 
 		this.source.connect(this.ctx.destination);
 
@@ -64,6 +87,8 @@ export class AudioEngine {
 		this.source = null;
 		this.isPlaying = false;
 		this.playbackOffset = 0;
+		this.loopRegion = null;
+		this.looping = false;
 	}
 
 	getPlaybackPosition() {
@@ -72,8 +97,20 @@ export class AudioEngine {
 
 		if (!this.isPlaying) return this.playbackOffset;
 
-		return this.playbackOffset +
+		const raw = this.playbackOffset +
 			(this.ctx.currentTime - this.playbackStartTime);
+
+		if (this.looping && this.loopRegion) {
+			const loopStart = this.loopRegion.getStart();
+			const loopEnd = this.loopRegion.getEnd();
+			const loopLength = loopEnd - loopStart;
+
+			if (raw >= loopEnd && loopLength > 0) {
+				return loopStart + ((raw - loopStart) % loopLength);
+			}
+		}
+
+		return raw;
 	}
 
 	seek(time) {
@@ -84,7 +121,7 @@ export class AudioEngine {
 		this.playbackOffset = time;
 
 		if (this.isPlaying) {
-			this.play(time);
+			this.play(time, this.loopRegion);
 		}
 	}
 

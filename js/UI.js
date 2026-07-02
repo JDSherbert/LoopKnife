@@ -5,7 +5,52 @@ export class UI {
 		this.el = elements;
 	}
 
-	update(session) {
+	bind(session) {
+		const clamp = value => Math.max(0, Math.min(value, session.engine.duration));
+
+		this.el.loopStartTime.addEventListener("change", () => {
+			const value = parseFloat(this.el.loopStartTime.value);
+			if (!isNaN(value)) {
+				session.loop.setStart(clamp(value));
+			}
+		})
+		this.el.loopEndTime.addEventListener("change", () => {
+			const value = parseFloat(this.el.loopEndTime.value);
+			if (!isNaN(value)) {
+				session.loop.setEnd(clamp(value));
+			}
+		});
+		this.el.loopStartSample.addEventListener("change", () => {
+			const value = parseInt(this.el.loopStartSample.value);
+			if (!isNaN(value)) {
+				session.loop.setStart(value / session.engine.buffer.sampleRate);
+			}
+		});
+		this.el.loopEndSample.addEventListener("change", () => {
+			const value = parseInt(this.el.loopEndSample.value);
+			if (!isNaN(value)) {
+				session.loop.setEnd(value / session.engine.buffer.sampleRate);
+			}
+		});
+	}
+
+	updateFileInfo(session) {
+		if (!session.fileInfo) return;
+
+		// Audio properties
+		this.el.sampleRate.textContent = session.engine.buffer.sampleRate;
+		this.el.channels.textContent = session.engine.buffer.numberOfChannels;
+		this.el.duration.textContent = session.engine.buffer.duration.toFixed(2);
+
+		// File metadata
+		if (session.fileInfo) {
+			this.el.fileName.textContent = session.fileInfo.name;
+			this.el.fileType.textContent = session.fileInfo.type;
+			this.el.fileSize.textContent = (session.fileInfo.size / 1024).toFixed(1) + " KB";
+		}
+	}
+
+	updatePlayback(session) {
 		const engine = session.engine;
 		const loop = session.loop;
 
@@ -18,27 +63,20 @@ export class UI {
 		this.el.timeReadout.textContent = time.toFixed(3);
 		this.el.sampleReadout.textContent = Math.floor(time * sr);
 
-		// Loop times display
-		this.el.loopStartTime.textContent = loop.getStart().toFixed(3);
-		this.el.loopEndTime.textContent = loop.getEnd().toFixed(3);
+		// Loop times display - skip whichever input the user is currently editing
+		if (document.activeElement !== this.el.loopStartTime) {
+			this.el.loopStartTime.value = loop.getStart().toFixed(3);
+		}
+		if (document.activeElement !== this.el.loopEndTime) {
+			this.el.loopEndTime.value = loop.getEnd().toFixed(3);
+		}
 
-		// Loop sample display
-		this.el.loopStartSample.textContent = Math.floor(loop.getStart() * sr);
-		this.el.loopEndSample.textContent = Math.floor(loop.getEnd() * sr);
-
-		// TODO: These are set each frame, but they only need to be set once when the file is loaded.
-		// Move them to a separate function that is called on file load.
-
-		// Audio properties
-		this.el.sampleRate.textContent = sr;
-		this.el.channels.textContent = engine.buffer.numberOfChannels;
-		this.el.duration.textContent = engine.buffer.duration.toFixed(2);
-
-		// File metadata
-		if (session.fileInfo) {
-			this.el.fileName.textContent = session.fileInfo.name;
-			this.el.fileType.textContent = session.fileInfo.type;
-			this.el.fileSize.textContent = (session.fileInfo.size / 1024).toFixed(1) + " KB";
+		// Loop sample display - skip if the user is editing either input
+		if (document.activeElement !== this.el.loopStartSample) {
+			this.el.loopStartSample.value = Math.floor(loop.getStart() * sr);
+		}
+		if (document.activeElement !== this.el.loopEndSample) {
+			this.el.loopEndSample.value = Math.floor(loop.getEnd() * sr);
 		}
 	}
 }

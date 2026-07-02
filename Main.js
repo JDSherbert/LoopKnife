@@ -7,8 +7,9 @@ import { LoopEditor } from "./js/LoopEditor.js";
 import { UI } from "./js/UI.js";
 import { TransportController } from "./js/TransportController.js";
 import { AudioSession } from "./js/AudioSession.js";
+import { Exporter } from "./js/Exporter.js";
 
-class Application {
+class Main {
 	constructor() {
 
 		this.engine = new AudioEngine();
@@ -33,6 +34,7 @@ class Application {
 			fileType: document.getElementById("fileType"),
 			fileSize: document.getElementById("fileSize")
 		});
+		this.ui.bind(this.session);
 
 		this.loopEditor = new LoopEditor(
 			this.canvas,
@@ -60,7 +62,11 @@ class Application {
 			const file = e.target.files[0];
 
 			await this.session.open(file);
+			this.ui.updateFileInfo(this.session);
+			exportBtn.disabled = false;
 		};
+
+		exportBtn.onclick = async () => { await Exporter.export(this.session); };
 
 		this.startRenderLoop();
 	}
@@ -69,7 +75,7 @@ class Application {
 		const loop = () => {
 
 			this.renderer.render();
-			this.ui.update(this.session);
+			this.ui.updatePlayback(this.session);
 			requestAnimationFrame(loop);
 		};
 
@@ -78,5 +84,5 @@ class Application {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-	new Application();
+	new Main();
 });

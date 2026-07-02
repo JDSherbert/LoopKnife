@@ -5,7 +5,9 @@ export class TransportController {
 		this.session = session;
 		this.buttons = buttons;
 
-		buttons.playBtn.addEventListener("click", () => this.session.engine.play());
+		buttons.playBtn.addEventListener("click", () => {
+			this.session.engine.play(undefined, this.session.loop);
+		});
 		buttons.pauseBtn.addEventListener("click", () => this.session.engine.pause());
 		buttons.stopBtn.addEventListener("click", () => this.session.engine.stop());
 

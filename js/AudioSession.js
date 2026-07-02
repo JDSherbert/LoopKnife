@@ -17,7 +17,7 @@ export class AudioSession {
 		this.fileInfo = {
 			name: file.name,
 			type: file.type,
-			size: file.size
+			size: file.size,
 		};
 
 
@@ -45,5 +45,7 @@ export class AudioSession {
 			fn(data);
 		}
 	}
+
+
 
 }
