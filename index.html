@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>LoopKnife</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="icon" href="/favicon/favicon.png" type="image/png" />
+</head>
+
+<body>
+
+	<div id="app">
+
+		<header id="topBar">
+			<div class="title">LoopKnife</div>
+
+			<input id="fileInput" type="file" accept="audio/*" />
+
+			<button id="exportBtn" class="button" disabled>
+				Export Loop Tags
+			</button>
+		</header>
+
+		<main id="main">
+
+			<div id="transportBar">
+				<button id="playBtn" class="button" disabled>▶ Play</button>
+				<button id="pauseBtn" class="button" disabled>⏸ Pause</button>
+				<button id="stopBtn" class="button" disabled>■ Stop</button>
+			</div>
+
+			<div id="transportReadout">
+				Time: <span id="timeReadout">0.00</span>s
+				| Sample: <span id="sampleReadout">0</span>
+			</div>
+
+			<div id="waveContainer">
+				<canvas id="waveCanvas"></canvas>
+
+				<div id="loopStartMarker" class="marker"></div>
+				<div id="loopEndMarker" class="marker"></div>
+			</div>
+
+			<div id="infoBar">
+				<span id="startLabel">Start: --</span>
+				<span id="endLabel">End: --</span>
+			</div>
+
+			<div id="loopReadout">
+				Start: <span id="loopStartTime"></span>s
+				(<span id="loopStartSample"></span>)
+				<br>
+				End: <span id="loopEndTime"></span>s
+				(<span id="loopEndSample"></span>)
+			</div>
+
+			<div id="fileInfo">
+				File: <span id="fileName"></span>
+				Type: <span id="fileType"></span>
+				Size: <span id="fileSize"></span>
+			</div>
+
+			<div id="audioInfo">
+				SR: <span id="sampleRate"></span>
+				Channels: <span id="channels"></span>
+				Duration: <span id="duration"></span>s
+			</div>
+
+		</main>
+
+	</div>
+
+	<script type="module" src="Application.js"></script>
+
+</body>
+
+</html>
