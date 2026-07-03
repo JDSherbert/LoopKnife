@@ -8,24 +8,36 @@ export class AudioSession {
 	}
 
 	async open(file) {
-		await this._engine.load(file);
+		// Capture the loop markers unpacked from the file metadata bytes
+		const loopData = await this._engine.load(file);
+		const sampleRate = this._engine.buffer.sampleRate;
 
-		this._loop.setStart(0);
-		this._loop.setEnd(this._engine.duration);
+		// Convert sample counts into precision playback timeline seconds
+		const startTimeInSeconds = loopData.startSamples / sampleRate;
+		const endTimeInSeconds = loopData.endSamples / sampleRate;
+
+		// Set the state; If no tags were found, this defaults to 0 and full duration anyway.
+		this._loop.setStart(startTimeInSeconds);
+		this._loop.setEnd(endTimeInSeconds);
 
 		// store metadata for file
 		this.fileInfo = {
 			name: file.name,
-			type: file.type,
+			type: file.type || "audio/ogg", // Fallback text formatting block for blank ogg types
 			size: file.size,
 		};
 
+		console.log("Session loaded with markers at seconds:", startTimeInSeconds, "to", endTimeInSeconds);
 
-		console.log("Session loaded");
 		this.emit("loaded", {
 			buffer: this._engine.buffer,
-			fileInfo: this._engine.fileInfo
+			fileInfo: this.fileInfo // Passed this.fileInfo directly to ensure consistency
 		});
+	}
+
+	clearLoopMarkers() {
+		this._loop.setStart(0);
+		this._loop.setEnd(this._engine.buffer.length / this._engine.buffer.sampleRate);
 	}
 
 	get engine() {

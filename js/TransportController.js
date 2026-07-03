@@ -13,6 +13,8 @@ export class TransportController {
 		buttons.playLoopBtn.addEventListener("click", () => {
 			this.session.engine.playFromLoopStart(this.session.loop);
 		});
+		
+		buttons.resetLoopBtn.addEventListener("click", () => { this.session.clearLoopMarkers(); });
 
 		this.setEnabled(false);
 
@@ -24,5 +26,6 @@ export class TransportController {
 		this.buttons.playLoopBtn.disabled = !state;
 		this.buttons.pauseBtn.disabled = !state;
 		this.buttons.stopBtn.disabled = !state;
+		this.buttons.resetLoopBtn.disabled = !state;
 	}
 }

@@ -50,7 +50,8 @@ class Main {
 				playBtn: document.getElementById("playBtn"),
 				playLoopBtn: document.getElementById("playLoopBtn"),
 				pauseBtn: document.getElementById("pauseBtn"),
-				stopBtn: document.getElementById("stopBtn")
+				stopBtn: document.getElementById("stopBtn"),
+				resetLoopBtn: document.getElementById("resetLoopBtn")
 			}
 		);
 
@@ -110,6 +111,12 @@ class Main {
 			}
 		});
 
+		// Update volume whenever user slides the controller input element
+		const volumeSlider = document.getElementById("volumeSlider");
+		volumeSlider.addEventListener("input", (e) => {
+			this.engine.setVolume(parseFloat(e.target.value));
+		});
+
 		this.init();
 	}
 
@@ -129,10 +136,18 @@ class Main {
 	}
 
 	startRenderLoop() {
+
+		const meterEl = document.getElementById("volumeMeter");
+		
 		const loop = () => {
 
 			this.renderer.render();
 			this.ui.updatePlayback(this.session);
+
+			
+			if (meterEl && this.engine) {
+				meterEl.value = this.engine.getVolumeLevel();
+			}
 			requestAnimationFrame(loop);
 		};
 

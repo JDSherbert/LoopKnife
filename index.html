@@ -12,6 +12,8 @@
 	<link rel="stylesheet" href="css/marker.css" />
 	<link rel="stylesheet" href="css/transport.css" />
 	<link rel="stylesheet" href="css/topbar.css" />
+	<link rel="stylesheet" href="css/gain.css" />
+	<link rel="stylesheet" href="css/help.css" />
 	<link rel="icon" href="/favicon/favicon.png" type="image/png" />
 </head>
 
@@ -27,12 +29,12 @@
 			<div class="title">LoopKnife</div>
 
 			<label class="button fileButton">
-				🗁 Load Audio
+				🗁 Import Audio
 				<input id="fileInput" type="file" accept="audio/*" />
 			</label>
 
 			<button id="exportBtn" class="button" disabled>
-				🖫 Export...
+				🖫 Export
 			</button>
 
 			<button id="clearBtn" class="button">
@@ -44,9 +46,10 @@
 
 			<div id="transportBar">
 				<button id="playBtn" class="button" disabled>▶ Play</button>
-				<button id="playLoopBtn" class="button" disabled>▶| Play Loop</button>
+				<button id="playLoopBtn" class="button" disabled>⏯ Play Loop</button>
 				<button id="pauseBtn" class="button" disabled>⏸ Pause</button>
 				<button id="stopBtn" class="button" disabled>■ Stop</button>
+				<button id="resetLoopBtn" class="button" disabled>↹ Reset Loop Markers</button>
 			</div>
 
 			<div id="transportReadout">
@@ -90,8 +93,56 @@
 					Duration (seconds): <span id="duration">--</span>
 				</div>
 
+				<div class="volume-container">
+					<span>🔊</span>
+					<input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7"
+						style="width: 100px;" />
+
+					<!-- Simple horizontal VU level meter -->
+					<progress id="volumeMeter" max="100" value="0" style="width: 80px; height: 12px;"></progress>
+				</div>
+
 			</div>
 
+			<br></br>
+
+			<div class="panel" id="helpPanel">
+				<h3>🛈 How To Use LoopKnife™</h3>
+				<ul class="help-list">
+					<li><strong>1. Load Track:</strong> Drag and drop any audio file straight into the <span
+							class="highlight">#waveContainer</span> window, or click <span class="highlight">🗁 Import
+							Audio</span> at the top.</li>
+					<li><strong>2. Set Start Marker:</strong> Drag the <span class="marker-yellow">yellow start
+							marker</span> on the canvas to your desired loop opening, or type precise values into the
+						<span class="highlight">Start Time</span> / <span class="highlight">Start Sample</span> inputs.
+					</li>
+
+					<li><strong>3. Set End Marker:</strong> Drag the <span class="marker-red">red end marker</span> to
+						set your loop cutoff point, or use the precise <span class="highlight">End Time</span> / <span
+							class="highlight">End Sample</span> fields.</li>
+					<li><strong>4. Test Playback:</strong> Press <span class="highlight">▶ Play</span> to listen
+						normally, or use <span class="highlight">⏯ Play Loop</span> to listen exclusively to the
+						selection and ensure your seams loop cleanly.</li>
+					<li><strong>5. Export:</strong> When satisfied, click <span class="highlight">🖫 Export</span> to
+						bake the loop metadata directly into the audio file. Use <span class="highlight">⟲ Clear
+							Session</span> to start fresh.</li>
+				</ul>
+
+				<div class="warning-section">
+					<h3>⚠ Critical Session Notes</h3>
+					<ul class="warning-list">
+						<li><strong>Format Limits:</strong> Loop metadata injection strictly supports <span
+								class="warn-highlight">.wav</span> and <span class="warn-highlight">.ogg</span> file
+							types. Other formats will fail to export correctly.</li>
+						<li><strong>Destructive Overrides:</strong> Any pre-existing loop markers embedded in your file
+							may be permanently overwritten on export. <em>Always back up your original files
+								locally!</em></li>
+						<li><strong>Browser Sample Offsets:</strong> Certain browsers introduce tiny, microsecond
+							rounding delays when decoding compressed audio (like OGG). For frame-perfect alignment,
+							uncompressed WAV is highly recommended.</li>
+					</ul>
+				</div>
+			</div>
 		</main>
 
 	</div>

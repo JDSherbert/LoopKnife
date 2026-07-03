@@ -318,7 +318,19 @@ export class Renderer {
 
 	drawEmptyState() {
 		this.ctx.clearRect(0, 0, this.width, this.height);
+
 		this.ctx.fillStyle = "#666";
-		this.ctx.fillText("Drag & Drop, or Load Audio", 20, 20);
+		this.ctx.font = "12px monospace";
+
+		// Calculate positioning from the absolute center
+		this.ctx.textAlign = "center";
+		this.ctx.textBaseline = "middle";
+
+		// Draw centered text in the middle of the canvas
+		this.ctx.fillText(
+			"Drag & Drop, or Import Audio",
+			this.width / 2,
+			this.height / 2
+		);
 	}
 }
