@@ -51,7 +51,7 @@ export class Importer {
         let loopEnd = null;
 
         // Ogg tags reside in the comment packets. Instead of mapping full Ogg structural mapping,
-        // we can efficiently safely scan the binary space for the text pattern.
+        // we scan the binary space for the text pattern.
         const textDump = decoder.decode(bytes);
         
         const matchStart = textDump.match(/LOOPSTART=(\d+)/i);
