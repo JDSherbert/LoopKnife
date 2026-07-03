@@ -29,3 +29,30 @@
 .fileButton:active {
     transform: translateY(1px);
 }
+
+/* Container to push social links nicely to the far right side of the header bar */
+.top-bar-links {
+    display: flex;
+    gap: 24px;
+    margin-left: auto;     /* Pushes the entire group all the way to the right side */
+    padding-right: 16px;   /* Adds comfortable breathing room from the screen edge */
+}
+
+/* Base style adaptation for links masquerading as structural buttons */
+.button.link-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto; /* Shrinks the footprint down so they sit nicely grouped */
+    padding: 6px 10px;
+    border-color: #242933; /* Slightly darker initial border to differentiate from tools */
+    color: #a0a5b5; /* Slightly dimmer text initially */
+}
+
+/* Hover and Focus interaction state override */
+.button.link-btn:hover {
+    background: #1f2430;
+    border-color: #00ffcc;
+    color: #00ffcc;
+}
