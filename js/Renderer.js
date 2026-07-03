@@ -8,7 +8,10 @@ export class Renderer {
 
 		this.sessionReady = false;
 
+		// Auto scale this to viewport
 		this.resize();
+		// When window resized, resize canvas and redraw
+		window.addEventListener('resize', this.resize.bind(this));
 	}
 
 	resize() {
@@ -24,6 +27,29 @@ export class Renderer {
 
 		this.width = rect.width;
 		this.height = rect.height;
+
+		this.resizeCanvasToDisplaySize();
+	}
+
+	resizeCanvasToDisplaySize() {
+		const canvas = this.ctx.canvas;
+
+		// Get the actual width/height the canvas is taking up in the layout
+		const displayWidth = canvas.clientWidth;
+		const displayHeight = canvas.clientHeight;
+
+		// If internal pixels don't match layout pixels, sync them up!
+		if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+			canvas.width = displayWidth;
+			canvas.height = displayHeight;
+
+			// Update any internal references your app relies on
+			this.width = displayWidth;
+			this.height = displayHeight;
+
+			return true; // Size updated!
+		}
+		return false; // No changes needed
 	}
 
 	attach(session) {
@@ -89,7 +115,7 @@ export class Renderer {
 
 		this.drawWaveform();
 
-		this.drawLoop(
+		this.drawLoopMarkers(
 			loop.getStart(),
 			loop.getEnd(),
 			buffer.duration
@@ -214,8 +240,7 @@ export class Renderer {
 		this.ctx.stroke();
 	}
 
-	drawLoop(loopStart, loopEnd, duration) {
-
+	drawLoopMarkers(loopStart, loopEnd, duration) {
 		if (!duration) return;
 		const width = this.width;
 		const height = this.height;
@@ -223,11 +248,11 @@ export class Renderer {
 		const x1 = loopStart / duration * width;
 		const x2 = loopEnd / duration * width;
 
-		// region fill
+		// Region Fill
 		this.ctx.fillStyle = "rgba(0, 255, 200, 0.15)";
 		this.ctx.fillRect(x1, 0, x2 - x1, height);
 
-		// start handle
+		// Start Handle Line
 		this.ctx.strokeStyle = "#ff3b3b";
 		this.ctx.lineWidth = 2;
 		this.ctx.beginPath();
@@ -235,13 +260,57 @@ export class Renderer {
 		this.ctx.lineTo(x1, height);
 		this.ctx.stroke();
 
-		// end handle
+		// End Handle Line
+		this.ctx.strokeStyle = "#ffcc00";
 		this.ctx.beginPath();
 		this.ctx.moveTo(x2, 0);
 		this.ctx.lineTo(x2, height);
 		this.ctx.stroke();
 
+		// Accessibility Text Badges Layout
 		this.ctx.lineWidth = 1;
+
+		// Configure crisp text properties
+		this.ctx.font = "bold 10px sans-serif";
+		this.ctx.textBaseline = "top";
+
+		// Draw START Label Badge
+		this.drawLabelBadge(x1, "START", "#ff3b3b", "left");
+
+		// Draw END Label Badge
+		this.drawLabelBadge(x2, "END", "#ffcc00", "right");
+	}
+
+	drawLabelBadge(x, text, accentColor, alignment) {
+		const paddingX = 6;
+		const paddingY = 4;
+		const topMargin = 8; // Distance from the absolute top of the canvas
+
+		const textWidth = this.ctx.measureText(text).width;
+		const badgeWidth = textWidth + (paddingX * 2);
+		const badgeHeight = 10 + (paddingY * 2); // 10px font height
+
+		// Calculate position based on alignment anchor so text doesn't bleed outside the bounding region
+		let badgeX = alignment === "left" ? x + 4 : x - badgeWidth - 4;
+		let badgeY = topMargin;
+
+		// Safety check: keep badges from getting pushed off the left or right edges of the canvas screen
+		if (badgeX < 0) badgeX = 4;
+		if (badgeX + badgeWidth > this.width) badgeX = this.width - badgeWidth - 4;
+
+		// Draw Background Capsule Shield
+		this.ctx.fillStyle = "#11141a"; // Dark backing color matches your editor theme
+		this.ctx.fillRect(badgeX, badgeY, badgeWidth, badgeHeight);
+
+		// Draw Subtle Accent Border matching the parent handle line
+		this.ctx.strokeStyle = accentColor;
+		this.ctx.lineWidth = 1;
+		this.ctx.strokeRect(badgeX, badgeY, badgeWidth, badgeHeight);
+
+		// Draw High-Contrast Text Layer
+		this.ctx.fillStyle = "#ffffff";
+		this.ctx.textAlign = "left";
+		this.ctx.fillText(text, badgeX + paddingX, badgeY + paddingY);
 	}
 
 	drawEmptyState() {
