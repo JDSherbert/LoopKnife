@@ -192,41 +192,43 @@ export class Renderer {
 	}
 
 	drawWaveform() {
-		if (!this.peaks) return;
+    if (!this.peaks) return;
 
-		const width = this.width;
-		const height = this.height;
+    const width = this.width;
+    const height = this.height;
 
-		const step = Math.floor(this.peaks.length / width);
+    // Keep the exact fractional step size.
+    const step = this.peaks.length / width;
 
-		this.ctx.beginPath();
+    this.ctx.beginPath();
 
-		for (let x = 0; x < width; x++) {
+    for (let x = 0; x < width; x++) {
+        let min = 1;
+        let max = -1;
 
-			let min = 1;
-			let max = -1;
+        // Calculate exact boundaries for this pixel column
+        const start = Math.floor(x * step);
+        const end = Math.floor((x + 1) * step);
 
-			const start = x * step;
-			const end = start + step;
+        // Scan the real block width
+        for (let i = start; i < end; i++) {
+            const p = this.peaks[i];
+            if (!p) continue;
 
-			for (let i = start; i < end; i++) {
-				const p = this.peaks[i];
-				if (!p) continue;
+            if (p.min < min) min = p.min;
+            if (p.max > max) max = p.max;
+        }
 
-				if (p.min < min) min = p.min;
-				if (p.max > max) max = p.max;
-			}
+        const y1 = (1 + min) * 0.5 * height;
+        const y2 = (1 + max) * 0.5 * height;
 
-			const y1 = (1 + min) * 0.5 * height;
-			const y2 = (1 + max) * 0.5 * height;
+        this.ctx.moveTo(x, y1);
+        this.ctx.lineTo(x, y2);
+    }
 
-			this.ctx.moveTo(x, y1);
-			this.ctx.lineTo(x, y2);
-		}
-
-		this.ctx.strokeStyle = "#00ffcc";
-		this.ctx.stroke();
-	}
+    this.ctx.strokeStyle = "#00ffcc";
+    this.ctx.stroke();
+}
 
 	drawPlayhead(time, duration) {
 
