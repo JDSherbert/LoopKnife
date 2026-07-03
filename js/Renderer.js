@@ -252,8 +252,11 @@ export class Renderer {
 		this.ctx.fillStyle = "rgba(0, 255, 200, 0.15)";
 		this.ctx.fillRect(x1, 0, x2 - x1, height);
 
+		let startColor = "#ffcc00";
+		let endColor = "#ff3b3b";
+
 		// Start Handle Line
-		this.ctx.strokeStyle = "#ff3b3b";
+		this.ctx.strokeStyle = startColor;
 		this.ctx.lineWidth = 2;
 		this.ctx.beginPath();
 		this.ctx.moveTo(x1, 0);
@@ -261,7 +264,7 @@ export class Renderer {
 		this.ctx.stroke();
 
 		// End Handle Line
-		this.ctx.strokeStyle = "#ffcc00";
+		this.ctx.strokeStyle = endColor;
 		this.ctx.beginPath();
 		this.ctx.moveTo(x2, 0);
 		this.ctx.lineTo(x2, height);
@@ -275,10 +278,10 @@ export class Renderer {
 		this.ctx.textBaseline = "top";
 
 		// Draw START Label Badge
-		this.drawLabelBadge(x1, "START", "#ff3b3b", "left");
+		this.drawLabelBadge(x1, "START", startColor, "left");
 
 		// Draw END Label Badge
-		this.drawLabelBadge(x2, "END", "#ffcc00", "right");
+		this.drawLabelBadge(x2, "END", endColor, "right");
 	}
 
 	drawLabelBadge(x, text, accentColor, alignment) {
@@ -316,6 +319,6 @@ export class Renderer {
 	drawEmptyState() {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 		this.ctx.fillStyle = "#666";
-		this.ctx.fillText("Load audio...", 20, 20);
+		this.ctx.fillText("Drag & Drop, or Load Audio", 20, 20);
 	}
 }

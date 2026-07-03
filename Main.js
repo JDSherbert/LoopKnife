@@ -34,7 +34,7 @@ class Main {
 			fileType: document.getElementById("fileType"),
 			fileSize: document.getElementById("fileSize"),
 			startLabel: document.getElementById("startLabel"),
-			endLabel: document.getElementById("endLabel")		
+			endLabel: document.getElementById("endLabel")
 		});
 		this.ui.bind(this.session);
 
@@ -55,6 +55,60 @@ class Main {
 		);
 
 		this.fileInput = document.getElementById("fileInput");
+
+		document.getElementById('clearBtn').addEventListener('click', () => {
+			// True forces the browser to pull a fresh copy rather than relying on cached elements
+			window.location.reload();
+		});
+
+		const dropZone = document.getElementById('waveContainer');
+
+		// Block global window defaults absolutely
+		window.addEventListener('dragover', (e) => {
+			e.preventDefault();
+		}, false);
+
+		window.addEventListener('drop', (e) => {
+			e.preventDefault();
+		}, false);
+
+		dropZone.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			dropZone.classList.add('drag-active');
+		});
+
+		dropZone.addEventListener('dragleave', () => {
+			dropZone.classList.remove('drag-active');
+		});
+
+		// 1. ADDED 'async' keyword here so await works
+		dropZone.addEventListener('drop', async (e) => {
+			e.preventDefault();
+			e.stopPropagation(); // Stop the event from bubbling up to the window
+			dropZone.classList.remove('drag-active');
+
+			if (!e.dataTransfer.files || e.dataTransfer.files.length === 0) return;
+
+			const file = e.dataTransfer.files[0];
+
+			// 2. FIXED: Fallback check for missing .ogg mime types
+			const isAudioMime = file.type.startsWith('audio/');
+			const isOggExtension = file.name.toLowerCase().endsWith('.ogg');
+
+			if (isAudioMime || isOggExtension) {
+				try {
+					await this.session.open(file);
+					this.ui.updateFileInfo(this.session);
+
+					const exportBtn = document.getElementById("exportBtn");
+					if (exportBtn) exportBtn.disabled = false;
+				} catch (err) {
+					console.error("Error loading dropped audio file:", err);
+				}
+			} else {
+				console.warn("Rejected non-audio file drop:", file.name, "Mime:", file.type);
+			}
+		});
 
 		this.init();
 	}
