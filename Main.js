@@ -61,7 +61,7 @@ class Main {
 		this.fileInput = document.getElementById("fileInput");
 
 		document.getElementById('clearBtn').addEventListener('click', () => {
-			// True forces the browser to pull a fresh copy rather than relying on cached elements
+			// Force the browser to pull a fresh copy rather than relying on cached elements
 			window.location.reload();
 		});
 
@@ -85,7 +85,6 @@ class Main {
 			dropZone.classList.remove('drag-active');
 		});
 
-		// 1. ADDED 'async' keyword here so await works
 		dropZone.addEventListener('drop', async (e) => {
 			e.preventDefault();
 			e.stopPropagation(); // Stop the event from bubbling up to the window
@@ -95,7 +94,7 @@ class Main {
 
 			const file = e.dataTransfer.files[0];
 
-			// 2. FIXED: Fallback check for missing .ogg mime types
+			// Fallback check for missing .ogg mime types
 			const isAudioMime = file.type.startsWith('audio/');
 			const isOggExtension = file.name.toLowerCase().endsWith('.ogg');
 
