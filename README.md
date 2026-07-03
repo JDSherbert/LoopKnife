@@ -24,8 +24,11 @@
 -----------------------------------------------------------------------
 
 <a href="https://jdsherbert.github.io/LoopKnife/"> 
-  <img align="left" alt="Live Tool" src="https://img.shields.io/badge/🚀%20Launch%20Tool-GitHub%20Pages-00ffcc?style=for-the-badge&logoColor=white&labelColor=151821"> </a>
-  
+  <img align="left" alt="Live Tool" src="https://img.shields.io/badge/%20Launch%20Tool-GitHub%20Pages-8534F3?style=for-the-badge&logo=github&logoColor=white&labelColor=151821"> </a>
+
+<a href="https://jdsherbert.itch.io/loopknife"> 
+  <img align="left" alt="Live Tool - Itch.io" src="https://img.shields.io/badge/%20Launch%20Tool-Itch.io-fa5c5c?style=for-the-badge&logo=itchdotio&logoColor=white&labelColor=151821"> </a
+                                                                                                                                                                                          
 <a href="https://choosealicense.com/licenses/mit/"> 
   <img align="right" alt="License" src="https://img.shields.io/badge/License%20:%20MIT-black?style=for-the-badge&logo=mit&logoColor=white&color=black&labelColor=black"> </a>
   
