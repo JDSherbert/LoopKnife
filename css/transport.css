@@ -1,0 +1,30 @@
+#transportBar {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 8px;
+	background: #151821;
+	border: 1px solid #222;
+	margin-bottom: 10px;
+}
+
+#transportReadout {
+	background: #151821;
+	border: 1px solid #222;
+	padding: 6px 10px;
+
+	font-size: 12px;
+	color: #666;
+
+	display: flex;
+	align-items: center;
+
+	border-radius: 3px;
+	letter-spacing: 0.2px;
+
+	user-select: none;
+}
+
+#transportReadout span {
+	color: #00ffcc;
+}

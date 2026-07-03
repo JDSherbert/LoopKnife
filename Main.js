@@ -32,7 +32,9 @@ class Main {
 			duration: document.getElementById("duration"),
 			fileName: document.getElementById("fileName"),
 			fileType: document.getElementById("fileType"),
-			fileSize: document.getElementById("fileSize")
+			fileSize: document.getElementById("fileSize"),
+			startLabel: document.getElementById("startLabel"),
+			endLabel: document.getElementById("endLabel")		
 		});
 		this.ui.bind(this.session);
 

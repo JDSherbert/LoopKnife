@@ -74,9 +74,11 @@ export class UI {
 		// Loop sample display - skip if the user is editing either input
 		if (document.activeElement !== this.el.loopStartSample) {
 			this.el.loopStartSample.value = Math.floor(loop.getStart() * sr);
+			this.el.startLabel.textContent = `LOOPSTART=${this.el.loopStartSample.value}`;
 		}
 		if (document.activeElement !== this.el.loopEndSample) {
 			this.el.loopEndSample.value = Math.floor(loop.getEnd() * sr);
+			this.el.endLabel.textContent = `LOOPEND=${this.el.loopEndSample.value}`;
 		}
 	}
 }

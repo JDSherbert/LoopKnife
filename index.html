@@ -6,6 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>LoopKnife</title>
 	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/panel.css" />
+	<link rel="stylesheet" href="css/button.css" />
+	<link rel="stylesheet" href="css/wavecanvas.css" />
+	<link rel="stylesheet" href="css/marker.css" />
+	<link rel="stylesheet" href="css/transport.css" />
+	<link rel="stylesheet" href="css/topbar.css" />
 	<link rel="icon" href="/favicon/favicon.png" type="image/png" />
 </head>
 
@@ -14,12 +20,19 @@
 	<div id="app">
 
 		<header id="topBar">
+			<div class="logo">
+				<img src="assets/logo/Bat Logo White.png" alt="Sherbert Audio Logo" width="54" />
+				<h6>Sherbert Audio</h6>
+			</div>
 			<div class="title">LoopKnife</div>
 
-			<input id="fileInput" type="file" accept="audio/*" />
+			<label class="button fileButton">
+				🗁 Load Audio
+				<input id="fileInput" type="file" accept="audio/*" />
+			</label>
 
 			<button id="exportBtn" class="button" disabled>
-				Export...
+				🖫 Export...
 			</button>
 		</header>
 
@@ -38,34 +51,40 @@
 
 			<div id="waveContainer">
 				<canvas id="waveCanvas"></canvas>
-
-				<!--<div id="loopStartMarker" class="marker"></div>-->
-				<!--<div id="loopEndMarker" class="marker"></div>-->
 			</div>
 
-			<div id="infoBar">
-				<span id="startLabel">Start: --</span>
-				<span id="endLabel">End: --</span>
-			</div>
+			<div id="infoPanels">
 
-			<div id="loopReadout">
-				Start: <input id="loopStartTime" type="number" step="0.001" min="0" style="width: 80px;" />s
-				(<input id="loopStartSample" type="number" step="1" min="0" style="width: 80px;" />)
-				<br>
-				End: <input id="loopEndTime" type="number" step="0.001" min="0" style="width: 80px;" />s
-				(<input id="loopEndSample" type="number" step="1" min="0" style="width: 80px;" />)
-			</div>
+				<div class="panel" id="infoBar">
+					Preview Export Metadata:
+					<span id="startLabel">LOOPSTART= --</span>
+					<span id="endLabel">LOOPEND= --</span>
+				</div>
 
-			<div id="fileInfo">
-				File: <span id="fileName"></span>
-				Type: <span id="fileType"></span>
-				Size: <span id="fileSize"></span>
-			</div>
+				<div class="panel" id="loopReadout">
+					Start Time (seconds):
+					<input id="loopStartTime" type="number" step="0.001" min="0" />
+					Start Sample:
+					<input id="loopStartSample" type="number" step="1" min="0" />
+					<br>
+					End Time (seconds):
+					<input id="loopEndTime" type="number" step="0.001" min="0" />
+					End Sample:
+					<input id="loopEndSample" type="number" step="1" min="0" />
+				</div>
 
-			<div id="audioInfo">
-				SR: <span id="sampleRate"></span>
-				Channels: <span id="channels"></span>
-				Duration: <span id="duration"></span>s
+				<div class="panel" id="fileInfo">
+					File: <span id="fileName">--</span>
+					Type: <span id="fileType">--</span>
+					Size: <span id="fileSize">--</span>
+				</div>
+
+				<div class="panel" id="audioInfo">
+					Sample Rate: <span id="sampleRate">--</span>
+					Channels: <span id="channels">--</span>
+					Duration (seconds): <span id="duration">--</span>
+				</div>
+
 			</div>
 
 		</main>

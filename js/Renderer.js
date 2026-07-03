@@ -85,6 +85,8 @@ export class Renderer {
 
 		this.ctx.clearRect(0, 0, this.width, this.height);
 
+		this.drawGrid(this.ctx, this.width, this.height);
+
 		this.drawWaveform();
 
 		this.drawLoop(
@@ -97,6 +99,70 @@ export class Renderer {
 			engine.getPlaybackPosition(),
 			buffer.duration
 		);
+	}
+
+	drawGrid(ctx, width, height) {
+		const gridSizeX = 20; // Spacing between individual cells
+		const gridSizeY = 50;
+
+		// Style configurations
+		const minorColor = "rgba(255, 255, 255, 0.04)";
+		const majorColor = "rgba(255, 255, 255, 0.15)";
+		const minorWidth = 1;
+		const majorWidth = 2; // Noticeably thicker
+
+		// Draw Vertical Lines (Time Markers)
+		let vLineIndex = 0;
+		for (let x = 0; x < width; x += gridSizeX) {
+			ctx.beginPath();
+
+			// Every 10th line becomes a major accent milestone
+			if (vLineIndex % 10 === 0) {
+				ctx.strokeStyle = majorColor;
+				ctx.lineWidth = majorWidth;
+			} else {
+				ctx.strokeStyle = minorColor;
+				ctx.lineWidth = minorWidth;
+			}
+
+			ctx.moveTo(x, 0);
+			ctx.lineTo(x, height);
+			ctx.stroke();
+
+			vLineIndex++;
+		}
+
+		// Draw Horizontal Lines (Amplitude Markers)
+		let hLineIndex = 0;
+		for (let y = 0; y < height; y += gridSizeY) {
+			ctx.beginPath();
+
+			if (hLineIndex % 10 === 0) {
+				ctx.strokeStyle = majorColor;
+				ctx.lineWidth = majorWidth;
+			} else {
+				ctx.strokeStyle = minorColor;
+				ctx.lineWidth = minorWidth;
+			}
+
+			ctx.moveTo(0, y);
+			ctx.lineTo(width, y);
+			ctx.stroke();
+
+			hLineIndex++;
+		}
+
+		const midY = height / 2;
+
+		ctx.beginPath();
+		ctx.strokeStyle = "rgba(255, 72, 0, 0.4)"; // Subtle neon cyan/blue accent color
+		ctx.lineWidth = 2; // Noticeably thick baseline
+
+		// If using anti-aliasing optimization, snap to pixel grid:
+		// Math.floor(height / 2) + 0.5;
+		ctx.moveTo(0, midY);
+		ctx.lineTo(width, midY);
+		ctx.stroke();
 	}
 
 	drawWaveform() {

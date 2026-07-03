@@ -1,0 +1,32 @@
+#waveContainer {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: #11141a;
+    border: 1px solid #222;
+    overflow: hidden;
+}
+
+#waveCanvas {
+display: block;
+    width: 100%;
+    height: 100%;
+    
+    /* Create the horizontal and vertical grid lines */
+    /*background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);*/
+    
+    /* Set the size of the grid squares (e.g., 40px wide by 20px high) */
+    /*background-size: 240px 200px;*/
+    
+    /* Center the zero-line/baseline vertically */
+    /*background-position: center center;*/
+    
+    /*background-color: #1a1d26; /* A matching base color for wave container */
+}
+
+#waveCanvas {
+    outline: 3px solid red;
+    pointer-events: auto;
+}

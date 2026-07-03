@@ -1,0 +1,31 @@
+#topBar {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    padding: 8px 8px 8px 24px;
+    background: #151821;
+    border-bottom: 1px solid #222;
+}
+
+.fileButton {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* hide file input /.../myfile.wav */
+.fileButton input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fileButton:hover {
+    border-color: #00ffcc;
+    box-shadow: 0 0 8px rgba(0, 255, 204, 0.15);
+}
+
+.fileButton:active {
+    transform: translateY(1px);
+}
