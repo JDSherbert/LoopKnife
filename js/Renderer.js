@@ -137,7 +137,7 @@ export class Renderer {
 		const minorColor = "rgba(255, 255, 255, 0.04)";
 		const majorColor = "rgba(255, 255, 255, 0.15)";
 		const minorWidth = 1;
-		const majorWidth = 2; // Noticeably thicker
+		const majorWidth = 2;
 
 		// Draw Vertical Lines (Time Markers)
 		let vLineIndex = 0;
@@ -183,8 +183,8 @@ export class Renderer {
 		const midY = height / 2;
 
 		ctx.beginPath();
-		ctx.strokeStyle = "rgba(255, 72, 0, 0.4)"; // Subtle neon cyan/blue accent color
-		ctx.lineWidth = 2; // Noticeably thick baseline
+		ctx.strokeStyle = "rgba(255, 72, 0, 0.4)";
+		ctx.lineWidth = 2; // Slightly thicker
 
 		// If using anti-aliasing optimization, snap to pixel grid:
 		// Math.floor(height / 2) + 0.5;
@@ -295,7 +295,7 @@ export class Renderer {
 
 		const textWidth = this.ctx.measureText(text).width;
 		const badgeWidth = textWidth + (paddingX * 2);
-		const badgeHeight = 10 + (paddingY * 2); // 10px font height
+		const badgeHeight = 10 + (paddingY * 2);
 
 		// Calculate position based on alignment anchor so text doesn't bleed outside the bounding region
 		let badgeX = alignment === "left" ? x + 4 : x - badgeWidth - 4;
