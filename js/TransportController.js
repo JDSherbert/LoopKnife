@@ -10,6 +10,9 @@ export class TransportController {
 		});
 		buttons.pauseBtn.addEventListener("click", () => this.session.engine.pause());
 		buttons.stopBtn.addEventListener("click", () => this.session.engine.stop());
+		buttons.playLoopBtn.addEventListener("click", () => {
+			this.session.engine.playFromLoopStart(this.session.loop);
+		});
 
 		this.setEnabled(false);
 
@@ -18,6 +21,7 @@ export class TransportController {
 
 	setEnabled(state) {
 		this.buttons.playBtn.disabled = !state;
+		this.buttons.playLoopBtn.disabled = !state;
 		this.buttons.pauseBtn.disabled = !state;
 		this.buttons.stopBtn.disabled = !state;
 	}

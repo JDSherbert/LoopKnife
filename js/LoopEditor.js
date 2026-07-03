@@ -44,7 +44,7 @@ export class LoopEditor {
 		return (x / rect.width) * engine.duration;
 	}
 
-	// returns "start", "end", "move", or null — does not mutate state
+	// returns "start", "end", "move", or null; does not mutate state
 	hitTest(time) {
 		const engine = this.session.engine;
 		const loop = this.session.loop;
@@ -92,7 +92,7 @@ export class LoopEditor {
 		if (!engine.buffer)
 			return;
 
-		// not dragging: just update hover cursor
+		// update hover cursor
 		if (!this.dragging) {
 			const x = this.getMouseX(e);
 			const time = this.xToTime(x);
@@ -117,7 +117,7 @@ export class LoopEditor {
 		// clamp
 		time = Math.max(0, Math.min(time, duration));
 
-		const minGap = 0.01; // seconds, prevents start/end collapsing to a zero-length loop
+		const minGap = 0.001; // seconds, prevents start/end collapsing to a zero-length loop
 
 		// HANDLE START
 		if (this.dragging === "start") {
@@ -137,11 +137,11 @@ export class LoopEditor {
 			return;
 		}
 
-		// MOVE WHOLE LOOP — keeps the same point under the cursor throughout the drag
+		// Move whole loop to keep the same point under the cursor throughout the drag
 		if (this.dragging === "move") {
 			const length = loop.getEnd() - loop.getStart();
 
-			// both in TIME units now — no pixel/time mixing
+			// both in TIME units now; no pixel/time mixing
 			let newStartTime = time - this.dragOffset;
 			let newEndTime = newStartTime + length;
 

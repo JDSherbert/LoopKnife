@@ -66,6 +66,19 @@ export class AudioEngine {
 		this.isPlaying = true;
 	}
 
+	async playFromLoopStart(loopRegion = null) {
+		if (!this.buffer) return;
+
+		const hasValidLoop =
+			loopRegion && loopRegion.getEnd() > loopRegion.getStart();
+
+		const offset = hasValidLoop
+			? loopRegion.getStart()
+			: 0.0;
+
+		await this.play(offset, loopRegion);
+	}
+
 	pause() {
 
 		if (!this.isPlaying) return;

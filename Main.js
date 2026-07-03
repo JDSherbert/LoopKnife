@@ -48,6 +48,7 @@ class Main {
 			this.session,
 			{
 				playBtn: document.getElementById("playBtn"),
+				playLoopBtn: document.getElementById("playLoopBtn"),
 				pauseBtn: document.getElementById("pauseBtn"),
 				stopBtn: document.getElementById("stopBtn")
 			}
