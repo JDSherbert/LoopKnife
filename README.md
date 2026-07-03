@@ -38,9 +38,9 @@
 ## Overview
 #### 🔗 [Launch the Live Web Application Here](https://jdsherbert.github.io/LoopKnife/)
 
-**LoopKnife™** is a lightweight, browser-based static interactive tool designed for sound designers and game developers to inject seamless loop points directly into audio metadata chunks. Built entirely with Vanilla JS and the Web Audio API, it provides an instantaneous, zero-install solution for prep-work before dragging assets into game engines like Unreal Engine, Unity, or Godot.
+**LoopKnife** is a lightweight, browser-based static interactive tool designed for sound designers and game developers to inject seamless loop points directly into audio metadata chunks. Built entirely with Vanilla JS and the Web Audio API, it provides an instantaneous, zero-install solution for prep-work before dragging assets into game engines like Unreal Engine, Unity, or Godot.
 
-### 💡 The "Why" Behind LoopKnife™
+### 💡 The "Why" Behind LoopKnife
 Many popular game creation frameworks (most famously **RPG Maker**) as well as specialized audio middleware, require explicit, sample-accurate loop tags embedded directly inside the file metadata chunks to cycle background music or audio patterns seamlessly. Traditionally, achieving this requires a tedious, highly manual workflow: opening a full digital audio workstation (DAW) or sample editor like Audacity. You'd have to hunt down precise sample coordinate indexes, and using external command-line metadata utilities or specialized tagging software to write the markers.
 
 I built LoopKnife to completely eliminate that friction. It brings that entire multi-step process into a single, instant, visual drag-and-drop web deck so you can slice your files, preview the seamless seam in real time, and export your engine-ready audio in seconds.
@@ -74,6 +74,6 @@ For most audio that needs to loop the full file, you can just import and then ex
 
 ## ⚖️ Intellectual Property & Privacy
 
-* **The Tool:** **LoopKnife™** software, layout design, branding, and source code are developed by and belong to me (JDSherbert). 
+* **The Tool:** **LoopKnife** software, layout design, branding, and source code are developed by and belong to me (JDSherbert). 
 * **Your Assets:** **You retain absolute 100% ownership of any audio files you load, manipulate, or export using this tool.** 
-* **Data Privacy:** Because LoopKnife™ is a completely static web application utilizing the client-side Web Audio API, **no audio files are ever uploaded to a server.** All rendering, slicing, and metadata manipulation happen entirely within your local browser sandbox. Your data never leaves your machine.
+* **Data Privacy:** Because LoopKnife is a completely static web application utilizing the client-side Web Audio API, **no audio files are ever uploaded to a server.** All rendering, slicing, and metadata manipulation happen entirely within your local browser sandbox. Your data never leaves your machine.
