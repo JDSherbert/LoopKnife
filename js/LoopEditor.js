@@ -146,7 +146,7 @@ export class LoopEditor {
 		if (this.dragging === "move") {
 			const length = loop.getEnd() - loop.getStart();
 
-			// both in TIME units now; no pixel/time mixing
+			// both in TIME unit; no pixel/time mixing
 			let newStartTime = time - this.dragOffset;
 			let newEndTime = newStartTime + length;
 
