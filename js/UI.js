@@ -1,4 +1,7 @@
-
+/**
+ * LoopKnife™ v1.0.0
+ * Developed by JDSherbert - Released under the MIT License.
+ */
 
 export class UI {
 	constructor(elements) {

@@ -12,7 +12,9 @@ display: block;
     width: 100%;
     height: 100%;
     
-    /* Create the horizontal and vertical grid lines */
+	/* The grid is now handled by Renderer.js instead of CSS, to allow 
+	   for dynamic grid scaling based on zoom level */
+
     /*background-image: 
         linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);*/

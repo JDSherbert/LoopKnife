@@ -1,4 +1,7 @@
-
+/**
+ * LoopKnife™ v1.0.0
+ * Developed by JDSherbert - Released under the MIT License.
+ */
 
 import { AudioEngine } from "./js/AudioEngine.js";
 import { Renderer } from "./js/Renderer.js";
@@ -138,7 +141,7 @@ class Main {
 	startRenderLoop() {
 
 		const meterEl = document.getElementById("volumeMeter");
-		
+
 		const loop = () => {
 
 			this.renderer.render();

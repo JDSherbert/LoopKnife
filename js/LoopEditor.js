@@ -1,3 +1,8 @@
+/**
+ * LoopKnife™ v1.0.0
+ * Developed by JDSherbert - Released under the MIT License.
+ */
+
 export class LoopEditor {
 	constructor(canvas, session, renderer) {
 		this.canvas = canvas;

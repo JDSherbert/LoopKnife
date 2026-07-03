@@ -1,3 +1,7 @@
+/**
+ * LoopKnife™ v1.0.0
+ * Developed by JDSherbert - Released under the MIT License.
+ */
 
 import { Importer } from "./Importer.js";
 
