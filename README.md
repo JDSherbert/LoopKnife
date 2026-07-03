@@ -1,5 +1,6 @@
 ![image]()
 
+
 # LoopKnife
 
 <!-- Header Start -->
@@ -23,7 +24,7 @@
 -----------------------------------------------------------------------
 
 <a href="https://jdsherbert.github.io/LoopKnife/"> 
-  <img align="left" alt="Live Tool" src="https://img.shields.io/badge/🚀%20Launch%20Tool-GitHub%20Pages-00ffcc?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=151821"> </a>
+  <img align="left" alt="Live Tool" src="https://img.shields.io/badge/🚀%20Launch%20Tool-GitHub%20Pages-00ffcc?style=for-the-badge&logoColor=white&labelColor=151821"> </a>
   
 <a href="https://choosealicense.com/licenses/mit/"> 
   <img align="right" alt="License" src="https://img.shields.io/badge/License%20:%20MIT-black?style=for-the-badge&logo=mit&logoColor=white&color=black&labelColor=black"> </a>
@@ -33,9 +34,9 @@
 -----------------------------------------------------------------------
 
 ## Overview
-**LoopKnife™** is a lightweight, browser-based static interactive tool designed for sound designers and game developers to inject seamless loop points directly into audio metadata chunks. Built entirely with Vanilla JS and the Web Audio API, it provides an instantaneous, zero-install solution for prep-work before dragging assets into game engines like Unreal Engine, Unity, or Godot.
+#### 🔗 [Launch the Live Web Application Here](https://jdsherbert.github.io/LoopKnife/)
 
-### 🔗 [Launch the Live Web Application Here](https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/)
+**LoopKnife™** is a lightweight, browser-based static interactive tool designed for sound designers and game developers to inject seamless loop points directly into audio metadata chunks. Built entirely with Vanilla JS and the Web Audio API, it provides an instantaneous, zero-install solution for prep-work before dragging assets into game engines like Unreal Engine, Unity, or Godot.
 
 ### 💡 The "Why" Behind LoopKnife™
 Many popular game creation frameworks (most famously **RPG Maker**) as well as specialized audio middleware, require explicit, sample-accurate loop tags embedded directly inside the file metadata chunks to cycle background music or audio patterns seamlessly. Traditionally, achieving this requires a tedious, highly manual workflow: opening a full digital audio workstation (DAW) or sample editor like Audacity. You'd have to hunt down precise sample coordinate indexes, and using external command-line metadata utilities or specialized tagging software to write the markers.
