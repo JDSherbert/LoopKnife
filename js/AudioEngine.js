@@ -83,6 +83,7 @@ export class AudioEngine {
 
 		this.stop();
 
+		// Play sound using web audio API
 		this.source = this.ctx.createBufferSource();
 		this.source.buffer = this.buffer;
 		this.source.connect(this.gainNode);
@@ -128,10 +129,9 @@ export class AudioEngine {
 
 		if (!this.isPlaying) return;
 
+		// Cache position (sample) and reapply
 		const pos = this.getPlaybackPosition();
-
 		this.stop();
-
 		this.playbackOffset = pos;
 	}
 
@@ -142,6 +142,7 @@ export class AudioEngine {
 			this.source.disconnect();
 		}
 
+		// Purge all data
 		this.source = null;
 		this.isPlaying = false;
 		this.playbackOffset = 0;
@@ -158,6 +159,7 @@ export class AudioEngine {
 		const raw = this.playbackOffset +
 			(this.ctx.currentTime - this.playbackStartTime);
 
+		// Find position based on samples
 		if (this.looping && this.loopRegion) {
 			const loopStart = this.loopRegion.getStart();
 			const loopEnd = this.loopRegion.getEnd();
@@ -197,7 +199,6 @@ export class AudioEngine {
 				this.gainNode.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.02);
 			} else {
 				// Transform the linear slider value (0.01 - 1.0) into an exponential audio curve
-				// This matches human perception perfectly!
 				const gainValue = Math.pow(value, 2);
 				this.gainNode.gain.linearRampToValueAtTime(gainValue, this.ctx.currentTime + 0.02);
 			}
