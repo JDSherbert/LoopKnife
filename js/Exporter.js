@@ -8,6 +8,7 @@ export class Exporter {
 	static async export(session) {
 		const extension = this.getExtension(session.fileInfo.name);
 
+		// Only supports .ogg and .wav for now, more to add in later updates (YAGNI)
 		switch (extension) {
 			case ".ogg":
 				return await this.exportOgg(session);
@@ -42,7 +43,7 @@ export class Exporter {
 	static injectOggLoopTags(buffer, loopStart, loopEnd) {
 		const srcU8 = new Uint8Array(buffer);
 
-		// 1. Read pages and extract the Vorbis logical packets
+		// Read pages and extract the Vorbis logical packets
 		const packets = [];
 		let offset = 0;
 		let currentPacket = [];
@@ -87,7 +88,7 @@ export class Exporter {
 			throw new Error("Could not parse Vorbis packet streams from file.");
 		}
 
-		// 2. Parse and rewrite Packet Index 1 (The Comment Header)
+		// Parse and rewrite Packet Index 1 (The Comment Header)
 		const commentPacket = packets[1];
 		if (commentPacket[0] !== 0x03 || String.fromCharCode(...commentPacket.subarray(1, 7)) !== "vorbis") {
 			throw new Error("Packet index 1 is missing valid Vorbis comment markers.");
@@ -117,7 +118,7 @@ export class Exporter {
 		existingComments.push(`LOOPSTART=${loopStart}`);
 		existingComments.push(`LOOPEND=${loopEnd}`);
 
-		// 3. Serialize our freshly mutated Comment Packet
+		// Serialize mutated Comment Packet
 		const encoder = new TextEncoder();
 		let newPayloadSize = 7 + 4 + vendorBytes.length + 4;
 		const commentByteArrays = existingComments.map(c => encoder.encode(c));
@@ -282,7 +283,7 @@ export class Exporter {
 		// Wipe old structures out completely
 		chunks = chunks.filter(c => c.id !== "smpl" && c.id !== "id3 " && c.id !== "LIST");
 
-		// 1. Hardware/Engine Chunk
+		// Hardware/Engine Chunk
 		const smplChunkBuffer = this.buildSmplChunk(start, end);
 		chunks.push({
 			id: "smpl",
@@ -290,7 +291,7 @@ export class Exporter {
 			data: new Uint8Array(smplChunkBuffer)
 		});
 
-		// 2. Metadata Editor Chunk
+		// Metadata Editor Chunk
 		const id3ChunkBuffer = this.buildId3Chunk(start, end);
 		chunks.push({
 			id: "id3 ",
