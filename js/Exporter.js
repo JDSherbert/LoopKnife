@@ -145,7 +145,7 @@ export class Exporter {
 		// Swap out the old packet with our newly injected array
 		packets[1] = newCommentPacket;
 
-		// 4. Repack ALL packets back down safely into clean, uniform Ogg container pages
+		// Repack ALL packets back down safely into clean, uniform Ogg container pages
 		return this.rebuildOggContainer(packets, vorbisSerial, srcU8);
 	}
 
@@ -333,6 +333,7 @@ export class Exporter {
 		const buffer = new ArrayBuffer(size);
 		const view = new DataView(buffer);
 
+		// rebuild smpl chunk manually
 		let o = 0;
 		view.setUint32(o, 0, true); o += 4;
 		view.setUint32(o, 0, true); o += 4;
@@ -416,6 +417,7 @@ export class Exporter {
 		const out = new ArrayBuffer(12 + chunkBytes);
 		const view = new DataView(out);
 
+		// reconstruct the RIFF and WAVE file
 		writeString(view, 0, "RIFF");
 		view.setUint32(4, 4 + chunkBytes, true);
 		writeString(view, 8, "WAVE");
