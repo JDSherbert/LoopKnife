@@ -281,10 +281,8 @@ export class Renderer {
 		this.ctx.font = "bold 10px sans-serif";
 		this.ctx.textBaseline = "top";
 
-		// Draw START Label Badge
+		// Draw START abd END Label Badge
 		this.drawLabelBadge(x1, "START", startColor, "left");
-
-		// Draw END Label Badge
 		this.drawLabelBadge(x2, "END", endColor, "right");
 	}
 
@@ -306,7 +304,7 @@ export class Renderer {
 		if (badgeX + badgeWidth > this.width) badgeX = this.width - badgeWidth - 4;
 
 		// Draw Background Capsule Shield
-		this.ctx.fillStyle = "#11141a"; // Dark backing color matches your editor theme
+		this.ctx.fillStyle = "#11141a";
 		this.ctx.fillRect(badgeX, badgeY, badgeWidth, badgeHeight);
 
 		// Draw Subtle Accent Border matching the parent handle line
